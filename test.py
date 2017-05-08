@@ -48,21 +48,24 @@ def clear():
 
 
 def newRoation():
-   delay = 0.025   
+   delay = 1.025   
    strip = DigiDotBooster_LED(60)
    for p in range(0,6):
      strip.setPixelColor(p, Color(0,0,255))
+     strip.repeatPixelRange(0,11,4)
      strip.show()
      time.sleep(delay)
    while (1):
      for x in range(0, 6):
         strip.shiftUpRange( x, x+6, 1)
         strip.setPixelColor(x, Color(255,0,0))
+        strip.repeatPixelRange(0,11,4)
         strip.show()
         time.sleep(delay)
      for x in range(0, 6):
         strip.shiftUpRange( x, x+6, 1)
         strip.setPixelColor(x, Color(0,0,255))
+        strip.repeatPixelRange(0,11,4)
         strip.show()
         time.sleep(delay)
 
