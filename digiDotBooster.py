@@ -67,7 +67,12 @@ class DigiDotBooster_LED(object):
             if (shouldShow):
                self.show()               
 
- 
+        def repeatPixelRange(self, start, end, count, shouldShow=False):
+            self.byteData.extend([0xB6, start, end, count])
+            if (shouldShow):
+               self.show() 
+
+
         def clear(self):
             # BOOSTER_SETRGB 0x000000, BOOSTER_SETALL, BOOSTER_SHOW
             self.spi.writebytes([0xA1, 0, 0, 0, 0xA5, 0xB2])
