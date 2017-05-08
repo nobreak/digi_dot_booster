@@ -42,20 +42,29 @@ def demo3self():
       strip.show()
       time.sleep(0.5)
 
+def clear():
+    strip = DigiDotBooster_LED(60)
+    strip.clear()
+
+
 def newRoation():
-   
+   delay = 0.025   
    strip = DigiDotBooster_LED(60)
    for p in range(0,6):
      strip.setPixelColor(p, Color(0,0,255))
      strip.show()
- #    time.sleep(0.025)
-
-   for x in range(0, 6):
-     strip.shiftUpRange(1, x, x+6)
-     strip.setPixelColor(x, Color(255,0,0))
-#     strip.spi.writebytes([0xB6,0,11,4 ])
-     strip.show()
-#     time.sleep(0.025)
+     time.sleep(delay)
+   while (1):
+     for x in range(0, 6):
+        strip.shiftUpRange( x, x+6, 1)
+        strip.setPixelColor(x, Color(255,0,0))
+        strip.show()
+        time.sleep(delay)
+     for x in range(0, 6):
+        strip.shiftUpRange( x, x+6, 1)
+        strip.setPixelColor(x, Color(0,0,255))
+        strip.show()
+        time.sleep(delay)
 
 
 def newRotationByte():
@@ -80,6 +89,7 @@ def newRotationByte():
        time.sleep(0.018)
        time.sleep(delay)
 
+
 try:
 #   spi = spidev.SpiDev()
 #   spi.open(0, 1)
@@ -91,8 +101,10 @@ try:
 
 #    demo3self()
 
-#   newRoation()
-   newRotationByte() 
+   newRoation()
+   #newRotationByte() 
+#   clear()
+
    # time.sleep(2)
 #    strip.shiftUpRange(1,0,2)
 #    strip.setPixelColorAll(Color(255,0,0))
