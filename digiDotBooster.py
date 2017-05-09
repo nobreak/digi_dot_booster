@@ -23,6 +23,15 @@ def ConvertHSV2RGB(hue, sat, vol):
    red, green, blue = [x*255.0 for x in r, g, b]
    return int(red), int(green), int(blue)
 
+def ChangeBrightnessOfColor(color, brightness):
+   red = (color >> 8) & 255
+   blue =  color & 255
+   green =   (color >> 16) & 255
+
+   h,s,v = ConvertRGB2HSV(red, blue, green)
+   v = brightness
+   r,g,b = ConvertHSV2RGB(h,s,v)
+   return Color(r,g,b)
 
 class DigiDotBooster_LED(object):
         def __init__(self, num):    
@@ -48,6 +57,7 @@ class DigiDotBooster_LED(object):
             return self.countPixels
 
         def setPixelColor(self, n, color, shouldShow=False):
+            n = n-1
             blue =  color & 255
             green = (color >> 16) & 255
             red =   (color >> 8) & 255
@@ -56,6 +66,7 @@ class DigiDotBooster_LED(object):
               self.show()
 
         def setPixelColorHSV(self, n, hue, sat, vol, shouldShow=False):
+            n = n-1
             self.byteData.extend([0xA3, hue & 0xFF, hue >> 8, sat, vol, 0xA4, n])
             if (shouldShow):
               self.show()
@@ -74,6 +85,8 @@ class DigiDotBooster_LED(object):
               self.show()
 
         def setPixelColorRange(self, start, end, color, shouldShow=False):
+            start = start -1
+            end = end -1
             blue =  color & 255
             green = (color >> 16) & 255
             red =   (color >> 8) & 255
@@ -82,26 +95,36 @@ class DigiDotBooster_LED(object):
                self.show()
 
         def setPixelColorHSVRange(self, start, end, hue, sat, vol, shouldShow=False):
+            start = start -1
+            end = end -1
             self.byteData.extend([0xA3, hue & 0xFF, hue >> 8, sat, vol, 0xA6, start, end])
             if (shouldShow):
               self.show()
 
         def shiftUpRange(self, start, end, count, shouldShow=False):
+            start = start -1
+            end = end -1 
             self.byteData.extend([0xB3, start, end, count])
             if (shouldShow):
                self.show()
 
-        def shiftDownRange(self, start, end, count, shouldShow=False):    
+        def shiftDownRange(self, start, end, count, shouldShow=False):
+            start = start -1
+            end = end -1
             self.byteData.extend([0xB4, start, end, count])
             if (shouldShow):
                self.show()               
 
         def repeatPixelRange(self, start, end, count, shouldShow=False):
+            start = start -1
+            end = end -1
             self.byteData.extend([0xB6, start, end, count])
             if (shouldShow):
                self.show() 
 
         def setRainbow(self, start, end, hue, sat, vol, inc, shouldShow=False):
+            start = start -1
+            end = end -1
             self.byteData.extend([0xA7, hue & 0xFF, hue >> 8, sat, vol, start, end, inc])
             if (shouldShow):
                self.show()
