@@ -3,6 +3,8 @@ import spidev
 import time
 from digiDotBooster import DigiDotBooster_LED
 from digiDotBooster import Color
+from digiDotBooster import ConvertRGB2HSV
+from digiDotBooster import ConvertHSV2RGB
  
 DELAY = 0.04
 LED_COUNT = 60
@@ -93,28 +95,73 @@ def newRotationByte():
        time.sleep(delay)
 
 
+def rainbow():
+   delay = 1.025   
+   strip = DigiDotBooster_LED(60)
+   strip.setRainbow(0,5, 180, 255, 30, 100)
+   strip.repeatPixelRange(0,11,4)
+   strip.show()
+   time.sleep(delay)
+
+def testHSV():
+   strip = DigiDotBooster_LED(60)
+   strip.setPixelColorHSVAll(0,200,100)
+   strip.setPixelColorHSV(0,180, 200, 255)
+   strip.repeatPixelRange(0,11,4)
+   strip.setPixelColorHSVRange(15, 20, 60, 255, 80)
+   strip.show()
+
+def convertTest():
+   strip = DigiDotBooster_LED(60)
+   red = 126
+   green = 0
+   blue = 174
+
+   print "RGB:" + str(red) + " " + str(green) + " " + str(blue)
+   
+   strip.setPixelColorRange(0, 5, Color(red, green, blue))
+
+   hue, sat, vol = ConvertRGB2HSV(red, green, blue)
+   print "HSV:" + str(hue) + " " + str(sat) + " " + str(vol)
+ 
+   strip.setPixelColorHSVRange(12, 17, hue, sat, vol)
+
+   r,g,b, = ConvertHSV2RGB(hue, sat, vol)
+   print "RGB2:" + str(r) + " " + str(g) + " " + str(b)
+  
+   strip.setPixelColorRange(24, 29, Color(r,g,b))
+
+   strip.show()
+
+
+
 try:
 #   spi = spidev.SpiDev()
 #   spi.open(0, 1)
 #   spi.mode = 0b00
-   # init
+#   # init
 #   spi.writebytes([0xB1, LED_COUNT, 24])
 #   time.sleep(DELAY)
+#   i = 0
+#   while True:
+#        i += 5
+#        i = i % 360
+#        print i
+        # BOOSTER_SETRAINBOW HUE (2 Bytes), SATURATION, VALUE, von der ersten (0) bis
+        # zur letzten LED in 10-er Schritten, BOOSTER_SHOW
+#        spi.writebytes([0xA7, i & 0xFF, i >> 8, 255, 100, 0, LED_COUNT - 1, 10, 0xB2])  
+#        time.sleep(DELAY)
+
 #   demo3(spi)
 
-#    demo3self()
-
-   newRoation()
+#   demo3self()
+#   rainbow() 
+#   testHSV()
+#   convertTest()
+#   newRoation()
    #newRotationByte() 
-#   clear()
+   clear()
 
-   # time.sleep(2)
-#    strip.shiftUpRange(1,0,2)
-#    strip.setPixelColorAll(Color(255,0,0))
-#    strip.show()
-#    time.sleep(2)
-#    strip.setPixelColor(13,Color(0,125,255))
-#    strip.show()
     
 except KeyboardInterrupt:
     strip.clear()
