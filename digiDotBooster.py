@@ -1,5 +1,6 @@
 import spidev
 import time
+import colorsys
 
 def Color(red, green, blue, white = 0):
         """Convert the provided red, green, blue color to a 24-bit color value.
@@ -8,6 +9,19 @@ def Color(red, green, blue, white = 0):
         """
         return (white << 24) | (green << 16)| (red << 8) | blue
 
+def ConvertRGB2HSV(red, green, blue):
+   r, g, b = [x/255.0 for x in red, green, blue]
+   h, s, v = colorsys.rgb_to_hsv(r, g, b)
+   hue = h*360.0
+   sat, vol = [x*255.0 for x in s,v]
+   return int(hue), int(sat), int(vol)
+
+def ConvertHSV2RGB(hue, sat, vol):
+   h = hue/360.0
+   s, v = [x/255.0 for x in sat, vol]
+   r, g, b = colorsys.hsv_to_rgb(h,s,v)
+   red, green, blue = [x*255.0 for x in r, g, b]
+   return int(red), int(green), int(blue)
 
 
 class DigiDotBooster_LED(object):
@@ -41,6 +55,11 @@ class DigiDotBooster_LED(object):
             if (shouldShow):
               self.show()
 
+        def setPixelColorHSV(self, n, hue, sat, vol, shouldShow=False):
+            self.byteData.extend([0xA3, hue & 0xFF, hue >> 8, sat, vol, 0xA4, n])
+            if (shouldShow):
+              self.show()
+
         def setPixelColorAll(self, color, shouldShow=False):
             blue =  color & 255
             green = (color >> 16) & 255
@@ -49,6 +68,11 @@ class DigiDotBooster_LED(object):
             if (shouldShow):
                self.show()
 
+        def setPixelColorHSVAll(self, hue, sat, vol, shouldShow=False):
+            self.byteData.extend([0xA3, hue & 0xFF, hue >> 8, sat, vol, 0xA5])
+            if (shouldShow):
+              self.show()
+
         def setPixelColorRange(self, start, end, color, shouldShow=False):
             blue =  color & 255
             green = (color >> 16) & 255
@@ -56,6 +80,11 @@ class DigiDotBooster_LED(object):
             self.byteData.extend([0xA1, red, green, blue, 0xA6, start, end])
             if (shouldShow):
                self.show()
+
+        def setPixelColorHSVRange(self, start, end, hue, sat, vol, shouldShow=False):
+            self.byteData.extend([0xA3, hue & 0xFF, hue >> 8, sat, vol, 0xA6, start, end])
+            if (shouldShow):
+              self.show()
 
         def shiftUpRange(self, start, end, count, shouldShow=False):
             self.byteData.extend([0xB3, start, end, count])
@@ -71,6 +100,11 @@ class DigiDotBooster_LED(object):
             self.byteData.extend([0xB6, start, end, count])
             if (shouldShow):
                self.show() 
+
+        def setRainbow(self, start, end, hue, sat, vol, inc, shouldShow=False):
+            self.byteData.extend([0xA7, hue & 0xFF, hue >> 8, sat, vol, start, end, inc])
+            if (shouldShow):
+               self.show()
 
 
         def clear(self):
