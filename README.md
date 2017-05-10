@@ -67,7 +67,7 @@ Here is an example how to change the brightness of on LED:
 ### example.py
 This script shows some examples and cases how to use the DigiDotBooster class.
 
-###rainbow.py
+### rainbow.py
 This script is stolen from the [DigiDotBooster/RaspberryPi tutorial](http://www.ledswork.de/wp/2016/02/09/led-booster-am-raspberry-pi-mit-python-ansteuern/) and shows the direct use of the Digi Dot Booster commands
 
 ### strandtest_neopixellib.py
