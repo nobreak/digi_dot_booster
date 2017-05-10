@@ -5,9 +5,11 @@ from digiDotBooster import DigiDotBooster_LED
 from digiDotBooster import Color
 from digiDotBooster import ConvertRGB2HSV
 from digiDotBooster import ConvertHSV2RGB
+from digiDotBooster import ChangeBrightnessOfColor
  
-DELAY = 0.04
+DELAY = 0.125
 LED_COUNT = 60
+LED_ROWS = 5
  
 
 def demo3(spi):
@@ -48,9 +50,30 @@ def clear():
     strip = DigiDotBooster_LED(60)
     strip.clear()
 
+def newRotation3Color(led_count, led_rows, delay, colors, brightness=255):
+   if (brightness != 255):
+     for idx, color in enumerate(colors):
+       colors[idx] = ChangeBrightnessOfColor(color, brightness)
+
+   num_colors = len(colors)
+   led_count_row = led_count/led_rows
+   color_width = led_count_row/num_colors
+
+   strip = DigiDotBooster_LED(led_count)
+
+   while (1):
+     for color in colors:
+       for pixel in range(1,color_width):
+         strip.shiftUpRange(pixel, led_count_row, 1)
+         strip.setPixelColor(pixel, color)
+         strip.repeatPixelRange(1,led_count_row,led_rows-1)
+         strip.show()
+         time.sleep(delay)
+
+
 
 def newRoation():
-   delay = 1.025   
+   delay = 0.025   
    strip = DigiDotBooster_LED(60)
    for p in range(0,6):
      strip.setPixelColor(p, Color(0,0,255))
@@ -159,6 +182,7 @@ try:
 #   testHSV()
 #   convertTest()
 #   newRoation()
+#   newRotation3Color(LED_COUNT, LED_ROWS,0.075, [Color(255,0,0), Color(0,255,0), Color(0,0,255)], 25) 
    #newRotationByte() 
    clear()
 
