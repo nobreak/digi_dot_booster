@@ -6,7 +6,7 @@ Digi Dot Booster supports WS2812, SK6812 (and compatible) LED's.
 
 For me the reason to use Digi Dot Booster was the requirement to use WS2812b stripes and audio on a Raspberry PI (the use of a WS2812B strip and audio on Raspberry Pi at the same time is not possible, because of the use of the PCM channel by the WS2812b).
 
-Digi Dot Booster uses controlled by the SPI bus on Raspberry Pi. An example and tutorial how to connect and make runable you could found here: [http://www.ledswork.de/wp/2016/02/09/led-booster-am-raspberry-pi-mit-python-ansteuern/](http://www.ledswork.de/wp/2016/02/09/led-booster-am-raspberry-pi-mit-python-ansteuern/)
+Digi Dot Booster is controlled by the SPI bus on Raspberry Pi. An example and tutorial how to connect and make runable you could found here: [http://www.ledswork.de/wp/2016/02/09/led-booster-am-raspberry-pi-mit-python-ansteuern/](http://www.ledswork.de/wp/2016/02/09/led-booster-am-raspberry-pi-mit-python-ansteuern/)
 
 Before I used the Digi Dot Booster, I developed a python script which controlls the WS2812b directly connected on Raspberry Pi (without audio). For that I used the library from [jgarff](https://github.com/jgarff/rpi_ws281x) which is the most recommended library for WS2812 on Raspberry Pi.
 
