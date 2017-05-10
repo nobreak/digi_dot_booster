@@ -78,9 +78,9 @@ This script is based on the example script from [jgarff](https://github.com/jgar
 ## Limitations
  Digi Dot Booster has some limitations:
  
-  * the maximum number of LED's that could be controlled by Digi Dot Booster could is 256 - you need to ive an even number
-  * after every write the booster commands on the SPI bus, Digi Dot Booster needs some time to proces the commands. It depends by the count of LED you want to use. For every LED we need 0.0003 seconds. This library is calculating and handling the time for you, every time when you call `show()` on your DigiDotBooster instance.
-  * the maximum count of commands that could be writen on the SPI bus is 256 - currently this is not checked by the class
+  * the maximum number of LED's that could be controlled by Digi Dot Booster  is 256 - you need to give an even number
+  * after every write the booster commands on the SPI bus, Digi Dot Booster needs some time to process the commands. It depends by the count of LED's you want to use. For every LED we need 0.0003 seconds. This library is calculating and handling the time for you, every time when you call `show()` on your DigiDotBooster instance.
+  * the maximum count of commands that could be writen on the SPI bus is 256 - currently this is not checked by the class. But after every call of `show()`the command stack will be reseted. So for the most cases it will work without any problems
   
 ## Road Map
 
